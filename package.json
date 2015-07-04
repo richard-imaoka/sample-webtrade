@@ -1,0 +1,25 @@
+{
+  "name": "sample-webtrade",
+  "version": "1.0.0",
+  "description": "sample trade app",
+  "main": "express-server.js",
+  "dependencies": {
+    "body-parser": "^1.13.1",
+    "multer": "^0.1.8",
+    "express": "^4.13.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/richard-imaoka/sample-webtrade.git"
+  },
+  "author": "Richard S. Imaoka",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/richard-imaoka/sample-webtrade/issues"
+  },
+  "homepage": "https://github.com/richard-imaoka/sample-webtrade#readme"
+}
