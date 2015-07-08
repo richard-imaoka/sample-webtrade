@@ -8,11 +8,31 @@
       <option value="google" selected>Google</option>
       <option value="microsoft" >Microsoft</option>
     </select>
-    <label for="price">Price<label>
+    <label for="price">Price</label>
     <input type="number" name="price" id="price" value=90>
-    <label for="quantity" >Quantity<label>
+    <label for="quantity" >Quantity</label>
     <input type="number" name="quantity" id="quantity" value=1000>
     <button type="submit">Send Order</button>
   </form>  
+  
+    <table>
+      <thead>
+        <tr>
+          <th>StockName</th><th>Price</th><th>Quantity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>MicroSoft</td><td>99.5</td><td>100</td>
+        </tr>
+        <tr>
+          <td>MicroSoft</td><td>99.6</td><td>100</td>
+        </tr>
+        <tr id="hi">
+          <td >Google</td><td>99.5</td><td>100</td>
+        </tr>
+      </tbody>
+    </table>
+  
   </body>
 </html>
