@@ -5,8 +5,11 @@
   "main": "express-server.js",
   "dependencies": {
     "body-parser": "^1.13.1",
+    "events": "^1.0.2",
     "express": "^4.13.0",
+    "flux": "^2.0.3",
     "multer": "^0.1.8",
+    "object-assign": "^3.0.0",
     "react": "^0.13.3",
     "reactable": "^0.10.2"
   },

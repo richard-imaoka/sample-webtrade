@@ -1,5 +1,8 @@
 var React = require('react');
 var Reactable = require('reactable');
+var EventEmitter = require('events').EventEmitter;
+var OrderActions = require('./js/action');
+var OrderStore = require('./js/store');
 
 var Table = Reactable.Table,
     Tr = Reactable.Tr,
@@ -7,13 +10,21 @@ var Table = Reactable.Table,
 
 var OrderEntry = React.createClass({
 
+  getInitialState: function(){
+    return {
+      stock: 'Microsoft',
+      price: 100,
+      quantity: 1000
+    };
+  },
+
   handleUserInput: function(){
-    this.props.addOrder(this.props.order);
+    this.props.addOrder(this.state);
   },
 
   handleChange: function(){
-    this.props.updateOrderEntry({
-        stock: this.refs.stock.getDOMNode().value,
+    this.setState({
+        stock:    this.refs.stock.getDOMNode().value,
         price:    this.refs.price.getDOMNode().value,
         quantity: this.refs.quantity.getDOMNode().value
     });
@@ -22,14 +33,14 @@ var OrderEntry = React.createClass({
   render: function () {
     return (
         <form action="" method="POST">
-          <select name="stock" size={2} ref="stock" value={this.props.order.stock}>
+          <select name="stock" size={2} ref="stock" value={this.state.stock} onChange={this.handleChange}>
             <option value="Google">Google</option>
             <option value="Microsoft" >Microsoft</option>
           </select>
           <label htmlFor="price">Price</label>
-          <input type="number" name="price" id="price" value={this.props.order.price} ref="price" onChange={this.handleChange}/>
+          <input type="number" name="price" id="price" value={this.state.price} ref="price" onChange={this.handleChange}/>
           <label htmlFor="quantity" >Quantity</label>
-          <input type="number" name="quantity" id="quantity" value={this.props.order.quantity} ref="quantity" onChange={this.handleChange} />
+          <input type="number" name="quantity" id="quantity" value={this.state.quantity} ref="quantity" onChange={this.handleChange} />
           <button type="button" onClick={this.handleUserInput}>Send Order</button>
         </form>
     );
@@ -49,14 +60,12 @@ var App = React.createClass({
 
   getInitialState: function(){
     return {
-      orderEntry: {stock : "Google", price: 100, quantity: 1000},
       tableData: []
     };
   },
 
   updateOrderEntry: function(order){
     this.setState({
-      orderEntry: order,
       tableData: this.state.tableData
     });
   },
@@ -64,15 +73,16 @@ var App = React.createClass({
   addOrder: function(order){
     this.state.tableData.push(order);
     this.setState({
-      orderEntry: order,
       tableData: this.state.tableData
     });
+
+    OrderActions.send(order);
   },
 
   render: function(){
     return (
         <div>
-          <OrderEntry addOrder={this.addOrder} order={this.state.orderEntry} updateOrderEntry={this.updateOrderEntry}></OrderEntry>
+          <OrderEntry addOrder={this.addOrder} updateOrderEntry={this.updateOrderEntry}></OrderEntry>
           <OrderTable data={this.state.tableData}></OrderTable>
         </div>
     );
