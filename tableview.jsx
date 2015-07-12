@@ -60,8 +60,12 @@ var App = React.createClass({
 
   getInitialState: function(){
     return {
-      tableData: []
+      tableData: OrderStore.getAll()
     };
+  },
+
+  componentDidMount: function(){
+    OrderStore.addListener(this._onChange);
   },
 
   updateOrderEntry: function(order){
@@ -71,18 +75,19 @@ var App = React.createClass({
   },
 
   addOrder: function(order){
-    this.state.tableData.push(order);
-    this.setState({
-      tableData: this.state.tableData
-    });
-
     OrderActions.send(order);
+  },
+
+  _onChange: function(){
+    this.setState({
+      tableData: OrderStore.getAll()
+    });
   },
 
   render: function(){
     return (
         <div>
-          <OrderEntry addOrder={this.addOrder} updateOrderEntry={this.updateOrderEntry}></OrderEntry>
+          <OrderEntry addOrder={this.addOrder}></OrderEntry>
           <OrderTable data={this.state.tableData}></OrderTable>
         </div>
     );
