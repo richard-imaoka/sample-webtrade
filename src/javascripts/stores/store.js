@@ -2,7 +2,7 @@
  * Created by nishyu on 2015/07/13.
  */
 
-var OrderDispatcher = require('./dispatcher');
+var OrderDispatcher = require('./../dispatchers/dispatcher');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
 

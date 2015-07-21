@@ -1,4 +1,4 @@
-var OrderDispatcher = require('./dispatcher');
+var OrderDispatcher = require('./../dispatchers/dispatcher');
 
 var OrderActions = {
   send: function(order){

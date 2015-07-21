@@ -4,3 +4,4 @@ bundle.js
 ignore
 .idea
 *.log
+dist
