@@ -14,6 +14,8 @@ var uglifyify = require('uglifyify');
 
 gulp.task('watch', function(){
   var opts = assign({}, watchify.args, { entries: ['./src/javascripts/app.js'], debug: true, verbose: true });
+
+  //Be careful - gulp-browserify plugin is deprecated now
   var watchifyBundler = watchify(browserify(opts));
 
   //Register transforms and on-event callbacks

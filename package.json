@@ -37,8 +37,8 @@
     "watchify": "^3.2.3"
   },
   "scripts": {
-    "watch": "watchify -v -t babelify tableview.jsx -o bundle.js",
-    "sync": "browser-sync start --server express-server.js  --files bundle.js index.html"
+    "watch":  "gulp watch",
+    "server": "node src/javascripts/express-server.js"
   },
   "repository": {
     "type": "git",
