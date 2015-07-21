@@ -9,34 +9,30 @@ var gutil = require('gulp-util');
 var sourcemaps = require('gulp-sourcemaps');
 var assign = require('lodash.assign');
 var babelify = require('babelify');
+var uglifyify = require('uglifyify');
 
-// add custom browserify options here
-var customOpts = {
-  entries: ['./src/javascripts/app.js'],
-  debug: true
-};
 
-var opts = assign({}, watchify.args, customOpts);
-var b = watchify(browserify(opts));
+gulp.task('watch', function(){
+  var opts = assign({}, watchify.args, { entries: ['./src/javascripts/app.js'], debug: true, verbose: true });
+  var watchifyBundler = watchify(browserify(opts));
 
-// add transformations here
-// i.e. b.transform(coffeeify);
-b.transform(babelify);
+  //Register transforms and on-event callbacks
+  watchifyBundler.transform(babelify);
+  watchifyBundler.transform({global: true},uglifyify);
+  watchifyBundler.on('update', bundle); // on any dep update, runs the bundler
+  watchifyBundler.on('log', gutil.log); // output build logs to terminal
+  watchifyBundler.on('error', gutil.log.bind(gutil, 'Browserify Error')) // log errors if they happen
 
-gulp.task('js', bundle); // so you can run `gulp js` to build the file
-b.on('update', bundle); // on any dep update, runs the bundler
-b.on('log', gutil.log); // output build logs to terminal
+  //bundle() step to be run every time on update
+  function bundle() {
+    return watchifyBundler
+        .bundle()
+        .pipe(source('bundle.js'))
+        .pipe(buffer())  // optional, remove if you don't need to buffer file contents
+        .pipe(sourcemaps.init({loadMaps: true})) // loads map from browserify file
+        .pipe(sourcemaps.write('./')) // writes .map file
+        .pipe(gulp.dest('./dist'));
+  }
 
-function bundle() {
-  return b.bundle()
-    // log errors if they happen
-      .on('error', gutil.log.bind(gutil, 'Browserify Error'))
-      .pipe(source('bundle.js'))
-    // optional, remove if you don't need to buffer file contents
-      .pipe(buffer())
-    // optional, remove if you dont want sourcemaps
-      .pipe(sourcemaps.init({loadMaps: true})) // loads map from browserify file
-    // Add transformation tasks to the pipeline here.
-      .pipe(sourcemaps.write('./')) // writes .map file
-      .pipe(gulp.dest('./dist'));
-}
+  return bundle();
+});
