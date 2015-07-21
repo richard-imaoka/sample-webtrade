@@ -3,6 +3,7 @@ var Reactable = require('reactable');
 var EventEmitter = require('events').EventEmitter;
 var OrderActions = require('./js/action');
 var OrderStore = require('./js/store');
+var webAPI = require('./js/websocket-api');
 
 var Table = Reactable.Table,
     Tr = Reactable.Tr,
