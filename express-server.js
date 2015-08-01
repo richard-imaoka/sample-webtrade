@@ -9,7 +9,7 @@ var path = require('path');
 
 var orders = [];
 
-var projectRoot = __dirname + '../../../';
+var projectRoot = __dirname;
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -38,9 +38,12 @@ app.get('/bundle.js.map', function (req, res) {
 
 
 io.on('connection', function (socket) {
-  console.log('connected');
+  console.log('client connected');
   socket.emit('news', { hello: 'world' });
   socket.on('my other event', function (data) {
-    console.glog(data);
+    console.log(data);
+  });
+  socket.on('disconnect', function(){
+    console.log('client disconnected');
   });
 });

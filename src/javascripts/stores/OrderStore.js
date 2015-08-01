@@ -6,7 +6,6 @@ var OrderDispatcher = require('./../dispatchers/dispatcher');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
 
-
 var _orders = [];
 
 var OrderStore = assign({}, EventEmitter.prototype, {
