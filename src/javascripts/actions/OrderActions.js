@@ -1,6 +1,6 @@
 var OrderDispatcher = require('./../dispatchers/dispatcher');
 
-var OrderActions = {
+module.exports = {
   send: function(order){
 
     var action = {
@@ -11,5 +11,3 @@ var OrderActions = {
     OrderDispatcher.dispatch(action);
   }
 };
-
-module.exports = OrderActions;

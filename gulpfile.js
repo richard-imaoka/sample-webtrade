@@ -12,7 +12,7 @@ var babelify = require('babelify');
 var uglifyify = require('uglifyify');
 
 
-gulp.task('watch', function(){
+gulp.task('watchify', function(){
   var opts = assign({}, watchify.args, { entries: ['./src/javascripts/app.js'], debug: true, verbose: true });
 
   //Be careful - gulp-browserify plugin is deprecated now
@@ -37,4 +37,12 @@ gulp.task('watch', function(){
   }
 
   return bundle();
+});
+
+gulp.task('copy-html-to-dist', function(){
+  return gulp.src('./*.html').pipe( gulp.dest('dist') );
+});
+
+gulp.task('watch', ['watchify'], function(){
+  return gulp.watch('./*.html', ['copy-html-to-dist']);
 });
